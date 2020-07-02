@@ -46,6 +46,7 @@
         </div>
         <% }) %>
       </div>
+      <% if(currentUser && currentUser._id.equals(camp.author.id)){ %>
       <div id="btn_show">
         <a class="ui green button btn_show" href="<%= camp._id%>/edit">Edit</a>
         <form
@@ -56,6 +57,8 @@
           <button class="ui red button">Delete</button>
         </form>
       </div>
+
+      <% } %>
     </div>
   </div>
 </div>

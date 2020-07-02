@@ -64,7 +64,7 @@ router.get('/:id/edit',hasCampgroundAuthority, (req, res) => {
 });
 
 // Update
-router.put('/:id', (req, res) => {
+router.put('/:id', hasCampgroundAuthority,(req, res) => {
   req.body.camp.description = req.sanitize(req.body.camp.description);
   Camp.findByIdAndUpdate(req.params.id, req.body.camp, function (
     err,
@@ -75,7 +75,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Destroy
-router.delete('/:id', (req, res) => {
+router.delete('/:id',hasCampgroundAuthority, (req, res) => {
   Camp.findByIdAndRemove(req.params.id, function (err) {
     res.redirect('/campgrounds');
   });
