@@ -43,8 +43,13 @@
             <span id="comment_time_ago">... ten days ago</span>
           </p>
           <p class=""><%= comment.text %></p>
+          <% if(currentUser && currentUser._id.equals(comment.author.id)){ %>
           <div id="btn_show">
-            <a class="ui tiny green inverted button btn_show" href="/campgrounds/<%= camp._id%>/comments/<%= comment._id %>/edit">Edit</a>
+            <a
+              class="ui tiny green inverted button btn_show"
+              href="/campgrounds/<%= camp._id%>/comments/<%= comment._id %>/edit"
+              >Edit</a
+            >
             <form
               class="btn_show"
               action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>?_method=DELETE"
@@ -53,6 +58,7 @@
               <button class="ui tiny red inverted button">Delete</button>
             </form>
           </div>
+          <% } %>
         </div>
         <% }) %>
       </div>
