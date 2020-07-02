@@ -22,11 +22,8 @@ router.post('/', isLoggedIn, (req, res) => {
           comment.author.username = req.user.username;
           // save comment
           comment.save();
-
           camp.comments.push(comment);
           camp.save();
-          console.log(comment);
-          console.log(camp);
           res.redirect('/campgrounds/' + camp._id);
         }
       });
@@ -35,27 +32,28 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 // Edit
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', hasCommentAuthority,(req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if (err) {
-      console.log('ERROR', err.message || err);
+      console.log('ERROR', err);
     } else {
       res.render('comments/edit', {
         comment: foundComment,
         camp: req.params.id,
       });
+      console.log('ID', req.params.id, 'FOUNDCOMMENT', foundComment);
     }
   });
 });
 
 // Update
-router.put('/:comment_id', (req, res) => {
+router.put('/:comment_id', hasCommentAuthority,(req, res) => {
   Comment.findByIdAndUpdate(
     req.params.comment_id,
     req.body.comment,
     (err, foundComment) => {
       if (err) {
-        console.log('ERROR', err.message || err);
+        console.log('ERROR', err);
       } else {
         res.redirect('/campgrounds/' + req.params.id);
       }
@@ -64,10 +62,10 @@ router.put('/:comment_id', (req, res) => {
 });
 
 // Destroy
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id',hasCommentAuthority, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
     if (err) {
-      console.log('ERROR', err.message || err);
+      console.log('ERROR', err);
     } else {
       res.redirect('/campgrounds/' + req.params.id);
     }
@@ -78,6 +76,24 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/login');
+}
+function hasCommentAuthority(req, res, next) {
+  if (req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+      if (err) {
+        console.log('ERROR', err);
+        res.redirect('back');
+      } else {
+        if (foundComment.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 }
 
 module.exports = router;

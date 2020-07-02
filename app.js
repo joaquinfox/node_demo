@@ -7,7 +7,6 @@ const methodOverride = require('method-override');
 const Camp = require('./models/campground');
 const Comment = require('./models/comment');
 const User = require('./models/user');
-const seedDB = require('./seeds');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
@@ -22,7 +21,6 @@ mongoose.connect('mongodb://localhost/yelp_9', {
   useFindAndModify: false,
 });
 
-// seedDB();
 
 // PASSPORT CONFIGURATIOM
 app.use(
