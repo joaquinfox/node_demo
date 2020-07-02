@@ -34,6 +34,24 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+// Edit
+router.get('/:comment_id/edit', (req, res) => {
+  Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if (err) {
+      console.log('ERROR', err.message || err);
+    } else {
+      res.render('comments/edit', {
+        comment: foundComment,
+        camp: req.params.id,
+      });
+    }
+  });
+});
+
+// Update
+
+
+// Destroy
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
