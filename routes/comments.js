@@ -49,9 +49,30 @@ router.get('/:comment_id/edit', (req, res) => {
 });
 
 // Update
-
+router.put('/:comment_id', (req, res) => {
+  Comment.findByIdAndUpdate(
+    req.params.comment_id,
+    req.body.comment,
+    (err, foundComment) => {
+      if (err) {
+        console.log('ERROR', err.message || err);
+      } else {
+        res.redirect('/campgrounds/' + req.params.id);
+      }
+    }
+  );
+});
 
 // Destroy
+router.delete('/:comment_id', (req, res) => {
+  Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    if (err) {
+      console.log('ERROR', err.message || err);
+    } else {
+      res.redirect('/campgrounds/' + req.params.id);
+    }
+  });
+});
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
