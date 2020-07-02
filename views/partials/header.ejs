@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/app.css" />
+  </head>
+  <body>
+    <div class="ui secondary menu">
+      <h2 class="ui header">YelpCamp</h2>
+      <a class="active item" href="/campgrounds">Campgrounds</a>
+      <a class="item" href="/campgrounds/new">Add A Campground</a>
+      <a class="item" href="/">Home</a>
+      <div class="ui right inverted menu">
+        <% if(!currentUser){ %>
+        <a class="item" href="/login">Login</a>
+        <a class="item" href="/register">Sign Up</a>
+        <% }else{ %>
+        <a class="item" href="">Signed in as <%= currentUser.username %></a>
+        <a class="item" href="/logout">Logout</a>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

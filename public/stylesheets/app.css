@@ -1,0 +1,36 @@
+.item {
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+}
+
+h2.ui.header {
+  text-align: center;
+  color: purple;
+  font-size: 300%;
+  letter-spacing: -8px;
+  padding-right: 10rem;
+}
+.container {
+  padding: 2rem 8rem;
+  background-color: rgb(241, 183, 9);
+}
+
+.btn_show {
+  display: inline;
+}
+#price_tag {
+  float: right;
+}
+
+#comment_time_ago {
+  float: right;
+  font-size: 80%;
+  font-weight: normal;
+  color: rgb(150, 140, 160);
+}
+#show_header {
+  padding: 0.5rem 0;
+}
+#main_show_column {
+  padding: 0;
+}

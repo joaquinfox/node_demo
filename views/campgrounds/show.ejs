@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+<div class="ui container">
+  <div class="ui grid">
+    <div class="four wide column">
+      <div class="ui tiny green inverted vertical menu" id="inverted_menu">
+        <a class="active item">
+          Home
+        </a>
+        <a class="item">
+          Messages
+        </a>
+        <a class="item">
+          Friends
+        </a>
+      </div>
+    </div>
+    <div class="twelve wide column" id="main_show_column">
+      <img src="<%= camp.image %>" width="700em" alt="campground picture" />
+
+      <h2 id="show_header" class="">
+        <a href=""><%= camp.name %></a>
+        <div><p>Submited by <%= camp.author.username %></p></div>
+        <span id="price_tag">$20.00/night</span>
+      </h2>
+
+      <div class="description"><%= camp.description %></div>
+      <div class="ui segment">
+        <h1>
+          Chit Chat
+          <a
+            class="ui purple button right floated"
+            href="/campgrounds/<%= camp._id %>/comments/new"
+          >
+            Leave a review
+          </a>
+        </h1>
+        <hr />
+
+        <% camp.comments.forEach((comment)=>{ %>
+        <div class="ui segment">
+          <p class="ui header">
+            By <%= comment.author.username %>
+            <span id="comment_time_ago">... ten days ago</span>
+          </p>
+          <p class=""><%= comment.text %></p>
+        </div>
+        <% }) %>
+      </div>
+      <div id="btn_show">
+        <a class="ui green button btn_show" href="<%= camp._id%>/edit">Edit</a>
+        <form
+          class="btn_show"
+          action="/campgrounds/<%= camp._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="ui red button">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

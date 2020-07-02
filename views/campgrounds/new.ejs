@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<div class="ui text container">
+  <h1 class="ui header">YelpCamp</h1>
+  <form class="ui form" action="/campgrounds" method="POST">
+    <div class="field">
+      <label for="">Name</label>
+      <input type="text" name="camp[name]" />
+    </div>
+    <div class="field">
+      <label for="">Picture</label>
+      <input type="text" name="camp[image]" />
+    </div>
+    <div class="field">
+      <label for="">Descripton</label>
+      <textarea type="text" name="camp[description]"></textarea>
+    </div>
+    <input class="ui button" type="submit" />
+  </form>
+</div>
+<%- include('../partials/footer') %>
