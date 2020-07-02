@@ -23,7 +23,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 //  Create
 router.post('/', isLoggedIn, (req, res) => {
   req.body.camp.description = req.sanitize(req.body.camp.description);
- 
+
   let name = req.body.camp.name;
   let image = req.body.camp.image;
   let description = req.body.camp.description;
@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Edit
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit',hasCampgroundAuthority, (req, res) => {
   Camp.findById(req.params.id, function (err, foundCamp) {
     res.render('edit', { camp: foundCamp });
   });
@@ -85,6 +85,25 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/login');
+}
+
+function hasCampgroundAuthority(req, res, next) {
+  if (req.isAuthenticated()) {
+    Camp.findById(req.params.id, (err, foundCamp) => {
+      if (err) {
+        console.log('ERROR', err.message || err);
+        res.redirect('back');
+      } else {
+        if (foundCamp.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 }
 
 module.exports = router;
